@@ -1,11 +1,9 @@
 import React from "react";
-import "../assets/css/home.css"
-import Expensehistory from "./Expensehistory";
+import "../assets/css/home.css";
 
-function ExpenseShow({ expenses, editExpense, deleteExpense }) {
+function ExpenseShow({ expenses, deleteExpense, setEditingExpense }) {
     return (
         <div>
-            <h2>All Expenses</h2>
             {expenses.length === 0 ? (
                 <div className="empty-state">No expenses yet</div>
             ) : (
@@ -13,12 +11,12 @@ function ExpenseShow({ expenses, editExpense, deleteExpense }) {
                     {expenses.map((exp) => (
                         <li key={exp.id} className="expense-item">
                             <div className="expense-info">
-                                <span className="expense-title">{exp.item}</span>
-                                <span className="expense-date">{exp.date}</span>
+                                <span className="expense-title">Item Name: {exp.item}</span>
+                                <span className="expense-amount">Price: ₹{exp.amount}</span>
+                                <span className="expense-date">Date of expense: {exp.date}</span>
                             </div>
-                            <span className="expense-amount">₹{exp.amount}</span>
                             <div className="action-buttons">
-                                <button className="edit-btn" onClick={() => editExpense(exp)}>Edit</button>
+                                <button className="edit-btn" onClick={() => setEditingExpense(exp)}>Edit</button>
                                 <button className="delete-btn" onClick={() => deleteExpense(exp.id)}>Delete</button>
                             </div>
                         </li>
