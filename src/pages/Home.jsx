@@ -11,12 +11,11 @@ function Home() {
     const navigate = useNavigate();
 
     const handleLogout = () => {
-        localStorage.removeItem("user"); // remove user data
+        localStorage.removeItem("user");
         alert("Logged out successfully!");
         navigate("/login");
     };
 
-    // ---------------- Save Expense ----------------
     const saveExpense = () => {
         const user = JSON.parse(localStorage.getItem("user"));
         if (!user) {
@@ -31,7 +30,7 @@ function Home() {
         }
 
         axios.post(`${API_URL}/expenses`, {
-            user_id: user.id,  // send user_id to backend
+            user_id: user.id,
             item,
             amount,
             date
@@ -48,13 +47,11 @@ function Home() {
 
     return (
         <div className="container">
-            {/* Logout Button */}
             <div className="logout-container" onClick={handleLogout}>
                 <img src={logoutImg} className="logout-icon" alt="logout-icon" />
 
             </div>
 
-            {/* Add Expense Form */}
             <div className="logout-title">
                 <h1 className="title">Add New Expense</h1>
             </div>
@@ -66,7 +63,7 @@ function Home() {
                 <input type="number" placeholder="Amount" value={amount} onChange={e => setAmount(e.target.value)} />
             </div>
             <div className="form-grid">
-                <input type="date" value={date} onChange={e => setDate(e.target.value)} />
+                <input type="date" placeholder="Date" value={date} onChange={e => setDate(e.target.value)} />
             </div>
             <div className="button-group">
                 <button className="add-btn" onClick={saveExpense}>Add Expense</button>
