@@ -1,7 +1,6 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-import sqlite3, hashlib
-import os
+import sqlite3, hashlib, os
 
 app = Flask(__name__)
 CORS(app)
@@ -33,6 +32,11 @@ setup_db()
 # ---------- Helpers ----------
 def hash_password(password):
     return hashlib.sha256(password.encode()).hexdigest()
+
+# ---------- Root Route ----------
+@app.route("/")
+def home():
+    return "Expense Tracker API is running!"
 
 # ---------- User Routes ----------
 @app.route("/register", methods=["POST"])
@@ -150,4 +154,5 @@ def delete_expense(id):
 # ---------- Run App ----------
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
+    # Use Flask's development server
     app.run(host="0.0.0.0", port=port, debug=True)
