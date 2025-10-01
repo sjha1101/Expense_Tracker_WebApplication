@@ -1,12 +1,14 @@
 import React, { useState } from "react";
-import img from "../assets/images/Accountant.gif";
+import img from "../images/Accountant.gif";
 import "../css/login.css";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 function Register() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
+    const navigate = useNavigate();
 
     const handleRegister = async (e) => {
         e.preventDefault();
@@ -22,19 +24,23 @@ function Register() {
         }
 
         try {
-            // Call Flask API
+            // ✅ Call Flask Register API
             const res = await axios.post("http://127.0.0.1:5000/register", {
                 username,
                 password
             });
 
-            alert(res.data.message);  // "User registered successfully!"
+            alert(res.data.message || "User registered successfully!");
             setUsername("");
             setPassword("");
             setConfirmPassword("");
+
+            // ✅ Redirect to login page
+            navigate("/login");
+
         } catch (err) {
             if (err.response && err.response.data.error) {
-                alert(err.response.data.error); // Backend error (username exists, etc.)
+                alert(err.response.data.error);
             } else {
                 alert("Something went wrong!");
             }
@@ -80,7 +86,7 @@ function Register() {
                             <button type="button" onClick={handleReset} className="btn-reset">Reset</button>
                         </div>
                         <div className="linkform">
-                            <p>Already have an account ? <a href="./login">Login</a></p>
+                            <p>Already have an account ? <a href="/login">Login</a></p>
                         </div>
                     </form>
                 </div>

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import img from "../assets/images/Accountant.gif";
+import img from "../images/Accountant.gif";
 import "../css/login.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";

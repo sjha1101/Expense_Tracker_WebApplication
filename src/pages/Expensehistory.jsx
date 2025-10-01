@@ -10,7 +10,7 @@ import {
     Legend,
     Title
 } from "chart.js";
-import "../assets/css/home.css";
+import "../css/home.css";
 
 // Register chart elements
 ChartJS.register(ArcElement, Tooltip, Legend, Title);
