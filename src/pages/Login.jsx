@@ -3,6 +3,7 @@ import img from "../images/Accountant.gif";
 import "../css/login.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 function Login() {
     const [username, setUsername] = useState("");
@@ -70,7 +71,9 @@ function Login() {
                             <button type="button" onClick={handleReset} className="btn-reset">Reset</button>
                         </div>
                         <div className="linkform">
-                            <p>Don't have an account? <a href="./Register">Sign Up</a></p>
+                            <p>
+                                Don't have an account? <Link to="/register">Sign Up</Link>
+                            </p>
                         </div>
                     </form>
                 </div>
