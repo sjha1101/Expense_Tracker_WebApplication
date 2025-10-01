@@ -25,7 +25,7 @@ function Login() {
                 password
             });
 
-            alert(res.data.message);  // e.g., "Login successful!"
+            alert(res.data.message);
 
             // Save user info in localStorage for session
             localStorage.setItem("user", JSON.stringify(res.data.user));

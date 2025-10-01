@@ -11,11 +11,8 @@ import {
     Legend,
     Title
 } from "chart.js";
-
-// Register chart elements
 ChartJS.register(ArcElement, Tooltip, Legend, Title);
 
-// Deployed backend URL
 const API_URL = "https://expense-tracker-webapplication.onrender.com";
 
 function Expensehistory() {

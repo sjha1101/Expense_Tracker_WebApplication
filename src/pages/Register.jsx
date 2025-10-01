@@ -26,7 +26,6 @@ function Register() {
         }
 
         try {
-            // ✅ Call Flask Register API
             const res = await axios.post(`${API_URL}/register`, {
                 username,
                 password

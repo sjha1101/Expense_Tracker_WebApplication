@@ -10,7 +10,6 @@ function Home() {
     const [date, setDate] = useState("");
     const navigate = useNavigate();
 
-    // ---------------- Logout Function ----------------
     const handleLogout = () => {
         localStorage.removeItem("user"); // remove user data
         alert("Logged out successfully!");
