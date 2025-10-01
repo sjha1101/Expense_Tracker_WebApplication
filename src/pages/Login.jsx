@@ -70,7 +70,7 @@ function Login() {
                             <button type="button" onClick={handleReset} className="btn-reset">Reset</button>
                         </div>
                         <div className="linkform">
-                            <p>Don't have an account? <a href="./register">Sign Up</a></p>
+                            <p>Don't have an account? <a href="./Register">Sign Up</a></p>
                         </div>
                     </form>
                 </div>
