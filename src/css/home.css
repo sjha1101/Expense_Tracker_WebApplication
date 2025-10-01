@@ -1,21 +1,19 @@
 body {
-
     font-family: 'Poppins', sans-serif;
     margin: 0;
     padding: 0;
     min-height: 100vh;
     display: flex;
-    background: linear-gradient(135deg, #a18cd1, #fbc2eb);
     justify-content: center;
     align-items: flex-start;
 }
 
-/* 🌟 Main Container */
 .container {
+    position: relative;
     max-width: 420px;
     margin: 60px auto;
     padding: 40px;
-    background: rgba(255, 255, 255, 0.12);
+    background: rgba(255, 216, 216, 0.12);
     backdrop-filter: blur(20px) saturate(180%);
     border-radius: 25px;
     box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
@@ -23,10 +21,33 @@ body {
     animation: fadeIn 0.8s ease-in-out;
 }
 
-/* 🌟 Heading */
+.logout-container {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    padding: 8px 12px;
+    border-radius: 8px;
+    color: #fff;
+    transition: 0.3s;
+}
+
+.logout-icon {
+    width: 34px;
+    height: 34px;
+    margin-right: 8px;
+}
+
+.logout-text {
+    font-weight: bold;
+    font-size: 16px;
+}
+
 .container h1 {
     text-align: center;
-    color: #000000;
+    color: #000;
     margin-bottom: 35px;
     font-size: 32px;
     font-weight: 700;
@@ -34,7 +55,6 @@ body {
     text-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
 }
 
-/* 🌟 Form Grid */
 .form-grid {
     display: grid;
     gap: 20px;
@@ -46,7 +66,7 @@ body {
     border-radius: 15px;
     border: none;
     background: rgba(255, 255, 255, 0.2);
-    color: #000000;
+    color: #000;
     font-size: 15px;
     transition: 0.3s ease;
     box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.15);
@@ -62,7 +82,6 @@ body {
     box-shadow: 0 0 12px #a78bfa;
 }
 
-/* 🌟 Buttons */
 .button-group {
     display: flex;
     justify-content: center;
@@ -87,7 +106,6 @@ body {
     box-shadow: 0 15px 35px rgba(109, 40, 217, 0.7);
 }
 
-/* 🌟 Expense List */
 .expense-list {
     list-style: none;
     padding: 0;
@@ -117,26 +135,18 @@ body {
     flex-direction: column;
 }
 
-.expense-title {
-    font-weight: 500;
-    font-size: 16px;
-    color: #000000;
-}
-
-.expense-date {
-    font-weight: 500;
-    font-size: 16px;
-    color: #000000;
-    margin-top: 3px;
-}
-
+.expense-title,
+.expense-date,
 .expense-amount {
     font-weight: 500;
     font-size: 16px;
-    color: #000000;
+    color: #000;
 }
 
-/* 🌟 Action Buttons */
+.expense-date {
+    margin-top: 3px;
+}
+
 .action-buttons {
     display: flex;
     gap: 12px;
@@ -153,19 +163,17 @@ body {
     transition: all 0.3s ease;
 }
 
-/* Edit Button */
 .edit-btn {
-    background: #000000;
-    color: #ffffff;
+    background: #000;
+    color: #fff;
     box-shadow: 0 4px 12px rgba(251, 191, 36, 0.4);
 }
 
 .edit-btn:hover {
-    background: #ffffff;
-    color: rgb(0, 0, 0);
+    background: #fff;
+    color: #000;
 }
 
-/* Delete Button */
 .delete-btn {
     background: #ef4444;
     color: #fff;
@@ -176,7 +184,6 @@ body {
     background: #dc2626;
 }
 
-/* 🌟 Empty State */
 .empty-state {
     text-align: center;
     font-style: italic;
@@ -184,45 +191,10 @@ body {
     margin-top: 25px;
 }
 
-/* 🌟 Animations */
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* 🌟 Responsive */
-@media (max-width: 650px) {
-    .expense-item {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 10px;
-    }
-
-    .action-buttons {
-        align-self: flex-end;
-    }
-}
-
-/* 🌟 Expense History with Side-by-Side Layout */
-.history-layout {
-    display: flex;
-    gap: 25px;
-    align-items: flex-start;
-}
-
 .expenseshow-container {
     display: flex;
-    /* ✅ side by side layout */
     justify-content: space-between;
     gap: 25px;
-
     margin-top: 25px;
     padding: 40px;
     background: rgba(255, 255, 255, 0.12);
@@ -233,41 +205,30 @@ body {
     animation: fadeIn 0.8s ease-in-out;
 }
 
-/* Left side - history */
-.history-section {
-    flex: 1;
+.history-layout {
+    display: flex;
+    justify-content: space-between;
+    gap: 30px;
 }
 
-/* Right side - chart */
-.graph-section {
-    flex: 1;
-    background: rgba(255, 255, 255, 0.15);
-    border-radius: 20px;
-    padding: 25px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-}
-
-
-/* 🌟 Left side: Expense list */
 .expense-section {
     flex: 1;
 }
 
-/* 🌟 Right side: Edit form */
+.graph-section,
 .edit-form {
     flex: 1;
-    padding: 25px;
     background: rgba(255, 255, 255, 0.15);
-    backdrop-filter: blur(15px);
     border-radius: 20px;
+    padding: 25px 30px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-    animation: slideIn 0.4s ease-in-out;
+    animation: fadeIn 0.8s ease-in-out;
 }
 
 .edit-form h2 {
     text-align: center;
     margin-bottom: 20px;
-    color: #000000;
+    color: #000;
     text-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
 }
 
@@ -295,7 +256,18 @@ body {
     justify-content: center;
 }
 
-/* 🌟 Animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 @keyframes slideIn {
     from {
         opacity: 0;
@@ -308,10 +280,15 @@ body {
     }
 }
 
-/* 🌟 Responsive */
-@media (max-width: 768px) {
-    .history-layout {
+@media (max-width: 650px) {
+    .expense-item {
         flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    .action-buttons {
+        align-self: flex-end;
     }
 }
 
@@ -325,27 +302,6 @@ body {
     }
 }
 
-.history-layout {
-    display: flex;
-    justify-content: space-between;
-    gap: 30px;
-}
-
-.expense-section {
-    flex: 1;
-}
-
-.edit-form {
-    flex: 1;
-    background: rgba(255, 255, 255, 0.12);
-    backdrop-filter: blur(20px) saturate(180%);
-    border-radius: 20px;
-    padding: 30px;
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
-    border: 1px solid rgba(255, 255, 255, 0.25);
-    animation: fadeIn 0.8s ease-in-out;
-}
-
 .expensetitle {
     margin-left: 100px;
     text-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
@@ -353,28 +309,4 @@ body {
 
 .logout-title {
     display: flex;
-}
-
-.logout-container {
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-    position: absolute;
-    top: 10px;
-    right: 20px;
-    padding: 8px 12px;
-    border-radius: 8px;
-    color: #fff;
-    transition: 0.3s;
-}
-
-.logout-icon {
-    width: 34px;
-    height: 34px;
-    margin-right: 8px;
-}
-
-.logout-text {
-    font-weight: bold;
-    font-size: 16px;
 }
