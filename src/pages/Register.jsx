@@ -3,6 +3,7 @@ import img from "../images/Accountant.gif";
 import "../css/login.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 function Register() {
     const [username, setUsername] = useState("");
@@ -86,7 +87,7 @@ function Register() {
                             <button type="button" onClick={handleReset} className="btn-reset">Reset</button>
                         </div>
                         <div className="linkform">
-                            <p>Already have an account ? <a href="/login">Login</a></p>
+                            <p>Already have an account ? <Link to="/login">Login</Link></p>
                         </div>
                     </form>
                 </div>
