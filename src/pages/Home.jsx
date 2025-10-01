@@ -3,7 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "../css/home.css";
 import logoutImg from "../images/logout-icon.png";
-
+const API_URL = "https://expense-tracker-webapplication.onrender.com";
 function Home() {
     const [item, setItem] = useState("");
     const [amount, setAmount] = useState("");
@@ -31,7 +31,7 @@ function Home() {
             return;
         }
 
-        axios.post("http://127.0.0.1:5000/expenses", {
+        axios.post(`${API_URL}/expenses`, {
             user_id: user.id,  // send user_id to backend
             item,
             amount,

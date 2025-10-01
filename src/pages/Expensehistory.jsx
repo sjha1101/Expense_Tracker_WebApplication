@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import ExpenseShow from "./expenseshow";
 import { Pie } from "react-chartjs-2";
+import "../css/home.css";
 
 import {
     Chart as ChartJS,
@@ -10,10 +11,12 @@ import {
     Legend,
     Title
 } from "chart.js";
-import "../css/home.css";
 
 // Register chart elements
 ChartJS.register(ArcElement, Tooltip, Legend, Title);
+
+// Deployed backend URL
+const API_URL = "https://expense-tracker-webapplication.onrender.com";
 
 function Expensehistory() {
     const [expenses, setExpenses] = useState([]);
@@ -28,7 +31,7 @@ function Expensehistory() {
         const user = JSON.parse(localStorage.getItem("user"));
         if (!user) return;
 
-        axios.get(`http://127.0.0.1:5000/expenses?user_id=${user.id}`)
+        axios.get(`${API_URL}/expenses?user_id=${user.id}`)
             .then(res => setExpenses(res.data))
             .catch(err => console.error(err));
     };
@@ -37,7 +40,7 @@ function Expensehistory() {
         const user = JSON.parse(localStorage.getItem("user"));
         if (!user) return;
 
-        axios.delete(`http://127.0.0.1:5000/expenses/${id}?user_id=${user.id}`)
+        axios.delete(`${API_URL}/expenses/${id}?user_id=${user.id}`)
             .then(res => {
                 alert(res.data.message);
                 fetchExpenses();
@@ -49,7 +52,7 @@ function Expensehistory() {
         const user = JSON.parse(localStorage.getItem("user"));
         if (!user) return;
 
-        axios.put(`http://127.0.0.1:5000/expenses/${updatedExpense.id}`, {
+        axios.put(`${API_URL}/expenses/${updatedExpense.id}`, {
             ...updatedExpense,
             user_id: user.id
         })
@@ -67,7 +70,7 @@ function Expensehistory() {
         datasets: [
             {
                 label: "Expense Amount",
-                data: expenses.map(exp => parseFloat(exp.amount)), // ensure numbers
+                data: expenses.map(exp => parseFloat(exp.amount)),
                 backgroundColor: [
                     "#6d28d9",
                     "#4f46e5",

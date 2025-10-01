@@ -4,6 +4,7 @@ import "../css/login.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
+const API_URL = "https://expense-tracker-webapplication.onrender.com";
 
 function Login() {
     const [username, setUsername] = useState("");
@@ -19,7 +20,7 @@ function Login() {
 
         try {
             // Call Flask API
-            const res = await axios.post("http://127.0.0.1:5000/login", {
+            const res = await axios.post(`${API_URL}/login`, {
                 username,
                 password
             });
