@@ -1,5 +1,5 @@
 import React from "react";
-import "../assets/css/home.css";
+import "../css/home.css";
 
 function ExpenseShow({ expenses, deleteExpense, setEditingExpense }) {
     return (

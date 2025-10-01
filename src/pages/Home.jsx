@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import "../assets/css/home.css";
+import "../css/home.css";
 import logoutImg from "../assets/images/logout-icon.png";
 
 function Home() {

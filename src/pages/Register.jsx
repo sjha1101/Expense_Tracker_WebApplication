@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import img from "../assets/images/Accountant.gif";
-import "../assets/css/login.css";
+import "../css/login.css";
 import axios from "axios";
 
 function Register() {
