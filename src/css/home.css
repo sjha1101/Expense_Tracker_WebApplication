@@ -89,7 +89,8 @@ body {
 }
 
 .add-btn {
-    padding: 16px 35px;
+
+    padding: 10px 13px;
     border: none;
     border-radius: 12px;
     font-size: 18px;
@@ -154,7 +155,8 @@ body {
 
 .edit-btn,
 .delete-btn {
-    padding: 12px 14px;
+
+    padding: 11px 11px;
     border: none;
     border-radius: 12px;
     font-size: 13px;
@@ -295,10 +297,6 @@ body {
 @media (max-width: 768px) {
     .history-layout {
         flex-direction: column;
-    }
-
-    .edit-form {
-        width: 100%;
     }
 }
 
