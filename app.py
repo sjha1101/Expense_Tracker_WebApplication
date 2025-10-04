@@ -5,9 +5,10 @@ from dotenv import load_dotenv
 import os, hashlib
 
 # ---------- Load environment variables ----------
-load_dotenv()
+load_dotenv()  # must be called before reading os.getenv
 MONGO_URI = os.getenv("MONGO_URI")
 
+print("Mongo URI:", MONGO_URI) 
 # ---------- Flask setup ----------
 app = Flask(__name__)
 CORS(app)
