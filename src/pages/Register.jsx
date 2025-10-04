@@ -2,47 +2,48 @@ import React, { useState } from "react";
 import img from "../images/Accountant.gif";
 import "../css/login.css";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
-import { Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
+
 const API_URL = "https://expense-tracker-webapplication.onrender.com";
 
 function Register() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
+    const [error, setError] = useState("");
     const navigate = useNavigate();
 
     const handleRegister = async (e) => {
         e.preventDefault();
+        setError("");
 
         if (!username || !password || !confirmPassword) {
-            alert("Please fill all fields!");
+            setError("Please fill all fields!");
             return;
         }
 
         if (password !== confirmPassword) {
-            alert("Passwords do not match!");
+            setError("Passwords do not match!");
             return;
         }
 
         try {
-            const res = await axios.post(`${API_URL}/register`, {
-                username,
-                password
-            });
+            const res = await axios.post(
+                `${API_URL}/register`,
+                { username, password },
+                { headers: { "Content-Type": "application/json" } }
+            );
 
             alert(res.data.message || "User registered successfully!");
             setUsername("");
             setPassword("");
             setConfirmPassword("");
-
             navigate("/login");
-
         } catch (err) {
             if (err.response && err.response.data.error) {
-                alert(err.response.data.error);
+                setError(err.response.data.error);
             } else {
-                alert("Something went wrong!");
+                setError("Something went wrong! Please try again.");
             }
         }
     };
@@ -51,14 +52,15 @@ function Register() {
         setUsername("");
         setPassword("");
         setConfirmPassword("");
+        setError("");
     };
 
     return (
         <div className="login-page">
             <div className="login-container">
-
                 <div className="login-form">
                     <h1>Sign Up</h1>
+                    {error && <p className="error-msg">{error}</p>}
                     <form onSubmit={handleRegister}>
                         <input
                             type="text"
@@ -76,7 +78,7 @@ function Register() {
                         />
                         <input
                             type="password"
-                            placeholder="Enter confirm password"
+                            placeholder="Confirm Password"
                             value={confirmPassword}
                             onChange={(e) => setConfirmPassword(e.target.value)}
                             className="login-input"
@@ -86,15 +88,15 @@ function Register() {
                             <button type="button" onClick={handleReset} className="btn-reset">Reset</button>
                         </div>
                         <div className="linkform">
-                            <p>Already have an account ? <Link to="/login">Login</Link></p>
+                            <p>
+                                Already have an account? <Link to="/login">Login</Link>
+                            </p>
                         </div>
                     </form>
                 </div>
-
                 <div className="login-image">
                     <img src={img} alt="Register GIF" />
                 </div>
-
             </div>
         </div>
     );
