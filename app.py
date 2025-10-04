@@ -13,6 +13,10 @@ CORS(app)
 def hash_password(password):
     return hashlib.sha256(password.encode()).hexdigest()
 
+@app.route("/", methods=["GET"])
+def home():
+    return "Expense Tracker Backend is running!"
+
 db = client["expense_tracker"]
 users_collection = db["users"]
 expenses_collection = db["expenses"]
