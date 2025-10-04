@@ -4,7 +4,7 @@ import axios from "axios";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
-import Expensehistory from "./pages/Expensehistory"; // correct page
+import Expensehistory from "./pages/Expensehistory";
 
 function App() {
   return (

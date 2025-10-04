@@ -10,7 +10,6 @@ from dotenv import load_dotenv
 # ---------- Load environment variables ----------
 load_dotenv()
 MONGO_URI = os.getenv("MONGO_URI")
-print("Mongo URI:", MONGO_URI)
 
 # ---------- Flask setup ----------
 app = Flask(__name__)
@@ -170,4 +169,5 @@ def delete_expense(expense_id):
 # ---------- Run server ----------
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
-    app.run(host="0.0.0.0", port=port, debug=True)
+    debug = os.environ.get("FLASK_DEBUG", "False").lower() == "true"
+    app.run(host="0.0.0.0", port=port, debug=debug)
