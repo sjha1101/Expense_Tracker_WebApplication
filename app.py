@@ -13,7 +13,8 @@ MONGO_URI = os.getenv("MONGO_URI")
 
 # ---------- Flask setup ----------
 app = Flask(__name__)
-CORS(app)
+# Allow requests only from your frontend
+CORS(app, origins=["https://expense-tracker-web-application-pi.vercel.app"])
 
 # ---------- MongoDB setup ----------
 try:
