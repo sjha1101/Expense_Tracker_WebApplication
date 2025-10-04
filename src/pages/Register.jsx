@@ -4,7 +4,7 @@ import "../css/login.css";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
 
-const API_URL = "https://expense-tracker-webapplication.onrender.com/";
+const API_URL = "https://expense-tracker-webapplication.onrender.com";
 // Render backend URL
 // const API_URL = "http://127.0.0.1:5000"; // Use this for local testing
 
