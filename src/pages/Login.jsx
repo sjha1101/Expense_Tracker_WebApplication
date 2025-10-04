@@ -9,34 +9,31 @@ const API_URL = "https://expense-tracker-webapplication.onrender.com";
 function Login() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    const [error, setError] = useState("");
     const navigate = useNavigate();
     const handleLogin = async (e) => {
         e.preventDefault();
+        setError("");
 
         if (!username || !password) {
-            alert("Please fill all fields!");
+            setError("Please fill all fields!");
             return;
         }
 
         try {
-            // Call Flask API
             const res = await axios.post(`${API_URL}/login`, {
                 username,
                 password
             });
-
-            alert(res.data.message);
-
-            // Save user info in localStorage for session
             localStorage.setItem("user", JSON.stringify(res.data.user));
+            setError(res.data.message);
 
-            // Navigate to Home page
-            navigate("/"); // <-- correct way
+            navigate("/");
         } catch (err) {
             if (err.response && err.response.data.error) {
-                alert(err.response.data.error); // Backend error
+                setError(err.response.data.error); // 🔹 show backend error in UI
             } else {
-                alert("Something went wrong!");
+                setError("Something went wrong! Please try again.");
             }
         }
     };

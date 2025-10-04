@@ -1,1 +1,2 @@
 pip install flask flask-cors flask-sqlalchemy
+pip install pymongo dnspython
