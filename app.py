@@ -5,10 +5,10 @@ from dotenv import load_dotenv
 import os, hashlib
 
 # ---------- Load environment variables ----------
-load_dotenv()  # must be called before reading os.getenv
+load_dotenv()
 MONGO_URI = os.getenv("MONGO_URI")
+print("Mongo URI:", MONGO_URI)
 
-print("Mongo URI:", MONGO_URI) 
 # ---------- Flask setup ----------
 app = Flask(__name__)
 CORS(app)
@@ -24,10 +24,10 @@ def hash_password(password):
     """Hashes a password using SHA256"""
     return hashlib.sha256(password.encode()).hexdigest()
 
-# # ---------- Routes ----------
-# @app.route("/", methods=["GET"])
-# def home():
-#     return "Expense Tracker Backend is running!"
+# ---------- Routes ----------
+@app.route("/", methods=["GET"])
+def home():
+    return "Expense Tracker Backend is running!"
 
 @app.route("/register", methods=["POST"])
 def register():
@@ -51,7 +51,7 @@ def register():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-@app.route("/", methods=["POST"])
+@app.route("/login", methods=["POST"])
 def login():
     try:
         data = request.get_json(force=True)
