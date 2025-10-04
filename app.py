@@ -1,8 +1,11 @@
+# app.py
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from pymongo import MongoClient
+from bson.objectid import ObjectId
+import hashlib
+import os
 from dotenv import load_dotenv
-import os, hashlib
 
 # ---------- Load environment variables ----------
 load_dotenv()
@@ -14,14 +17,18 @@ app = Flask(__name__)
 CORS(app)
 
 # ---------- MongoDB setup ----------
-client = MongoClient(MONGO_URI)
-db = client["expense_tracker"]
-users_collection = db["users"]
-expenses_collection = db["expenses"]
+try:
+    client = MongoClient(MONGO_URI)
+    db = client["expense_tracker"]
+    users_collection = db["users"]
+    expenses_collection = db["expenses"]
+    print("Connected to MongoDB Atlas!")
+except Exception as e:
+    print("Error connecting to MongoDB:", e)
 
-# ---------- Helpers ----------
+# ---------- Helper functions ----------
 def hash_password(password):
-    """Hashes a password using SHA256"""
+    """Hash a password with SHA256"""
     return hashlib.sha256(password.encode()).hexdigest()
 
 # ---------- Routes ----------
@@ -47,8 +54,9 @@ def register():
             "password": hash_password(password)
         })
 
-        return jsonify({"message": "User registered!"})
+        return jsonify({"message": "User registered successfully!"})
     except Exception as e:
+        print("Register Error:", e)
         return jsonify({"error": str(e)}), 500
 
 @app.route("/login", methods=["POST"])
@@ -73,29 +81,7 @@ def login():
             })
         return jsonify({"error": "Invalid username or password"}), 401
     except Exception as e:
-        return jsonify({"error": str(e)}), 500
-
-@app.route("/expenses", methods=["GET"])
-def get_expenses():
-    try:
-        user_id = request.args.get("user_id")
-        if not user_id:
-            return jsonify({"error": "user_id required"}), 400
-
-        from bson.objectid import ObjectId
-        rows = expenses_collection.find({"user_id": ObjectId(user_id)})
-
-        expenses = []
-        for r in rows:
-            expenses.append({
-                "id": str(r["_id"]),
-                "item": r["item"],
-                "amount": r["amount"],
-                "date": r["date"]
-            })
-
-        return jsonify(expenses)
-    except Exception as e:
+        print("Login Error:", e)
         return jsonify({"error": str(e)}), 500
 
 @app.route("/expenses", methods=["POST"])
@@ -110,7 +96,6 @@ def add_expense():
         if not user_id or not item or not amount or not date:
             return jsonify({"error": "All fields required"}), 400
 
-        from bson.objectid import ObjectId
         expenses_collection.insert_one({
             "user_id": ObjectId(user_id),
             "item": item,
@@ -118,8 +103,31 @@ def add_expense():
             "date": date
         })
 
-        return jsonify({"message": "Expense added!"})
+        return jsonify({"message": "Expense added successfully!"})
     except Exception as e:
+        print("Add Expense Error:", e)
+        return jsonify({"error": str(e)}), 500
+
+@app.route("/expenses", methods=["GET"])
+def get_expenses():
+    try:
+        user_id = request.args.get("user_id")
+        if not user_id:
+            return jsonify({"error": "user_id required"}), 400
+
+        rows = expenses_collection.find({"user_id": ObjectId(user_id)})
+        expenses = []
+        for r in rows:
+            expenses.append({
+                "id": str(r["_id"]),
+                "item": r["item"],
+                "amount": r["amount"],
+                "date": r["date"]
+            })
+
+        return jsonify(expenses)
+    except Exception as e:
+        print("Get Expenses Error:", e)
         return jsonify({"error": str(e)}), 500
 
 @app.route("/expenses/<expense_id>", methods=["PUT"])
@@ -133,7 +141,6 @@ def update_expense(expense_id):
         if not item or not amount or not date:
             return jsonify({"error": "All fields required"}), 400
 
-        from bson.objectid import ObjectId
         result = expenses_collection.update_one(
             {"_id": ObjectId(expense_id)},
             {"$set": {"item": item, "amount": amount, "date": date}}
@@ -142,21 +149,22 @@ def update_expense(expense_id):
         if result.matched_count == 0:
             return jsonify({"error": "Expense not found"}), 404
 
-        return jsonify({"message": "Expense updated!"})
+        return jsonify({"message": "Expense updated successfully!"})
     except Exception as e:
+        print("Update Expense Error:", e)
         return jsonify({"error": str(e)}), 500
 
 @app.route("/expenses/<expense_id>", methods=["DELETE"])
 def delete_expense(expense_id):
     try:
-        from bson.objectid import ObjectId
         result = expenses_collection.delete_one({"_id": ObjectId(expense_id)})
 
         if result.deleted_count == 0:
             return jsonify({"error": "Expense not found"}), 404
 
-        return jsonify({"message": "Expense deleted!"})
+        return jsonify({"message": "Expense deleted successfully!"})
     except Exception as e:
+        print("Delete Expense Error:", e)
         return jsonify({"error": str(e)}), 500
 
 # ---------- Run server ----------

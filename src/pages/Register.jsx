@@ -4,47 +4,52 @@ import "../css/login.css";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
 
-const API_URL = "https://expense-tracker-webapplication.onrender.com";
+const API_URL = "https://expense-tracker-webapplication.onrender.com"; // Render backend URL
+// const API_URL = "http://127.0.0.1:5000"; // Use this for local testing
 
 function Register() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
     const [error, setError] = useState("");
+    const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
 
     const handleRegister = async (e) => {
         e.preventDefault();
         setError("");
+        setLoading(true);
 
         if (!username || !password || !confirmPassword) {
             setError("Please fill all fields!");
+            setLoading(false);
             return;
         }
 
         if (password !== confirmPassword) {
             setError("Passwords do not match!");
+            setLoading(false);
             return;
         }
 
         try {
-            const res = await axios.post(
-                `${API_URL}/register`,
-                { username, password },
-                { headers: { "Content-Type": "application/json" } }
-            );
-
+            const res = await axios.post(`${API_URL}/register`, { username, password });
             alert(res.data.message || "User registered successfully!");
             setUsername("");
             setPassword("");
             setConfirmPassword("");
             navigate("/login");
         } catch (err) {
+            console.error("Register Error:", err); // Detailed error in browser console
             if (err.response && err.response.data.error) {
                 setError(err.response.data.error);
+            } else if (err.message) {
+                setError(err.message);
             } else {
                 setError("Something went wrong! Please try again.");
             }
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -84,8 +89,12 @@ function Register() {
                             className="login-input"
                         />
                         <div className="button-group">
-                            <button type="submit" className="btn-login">Register</button>
-                            <button type="button" onClick={handleReset} className="btn-reset">Reset</button>
+                            <button type="submit" className="btn-login" disabled={loading}>
+                                {loading ? "Registering..." : "Register"}
+                            </button>
+                            <button type="button" onClick={handleReset} className="btn-reset">
+                                Reset
+                            </button>
                         </div>
                         <div className="linkform">
                             <p>
