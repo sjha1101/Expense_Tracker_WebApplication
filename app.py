@@ -24,10 +24,10 @@ def hash_password(password):
     """Hashes a password using SHA256"""
     return hashlib.sha256(password.encode()).hexdigest()
 
-# ---------- Routes ----------
-@app.route("/", methods=["GET"])
-def home():
-    return "Expense Tracker Backend is running!"
+# # ---------- Routes ----------
+# @app.route("/", methods=["GET"])
+# def home():
+#     return "Expense Tracker Backend is running!"
 
 @app.route("/register", methods=["POST"])
 def register():
@@ -51,7 +51,7 @@ def register():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-@app.route("/login", methods=["POST"])
+@app.route("/", methods=["POST"])
 def login():
     try:
         data = request.get_json(force=True)
